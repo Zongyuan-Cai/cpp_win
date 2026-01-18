@@ -4,7 +4,7 @@ const int DEFAULT_SIZE = 100;
 template <typename T>
 class SeqQueue
 {
-private:
+protected:
     T *data;
     int front;
     int rear;
@@ -127,6 +127,7 @@ std::ostream &operator<<(std::ostream &os, const SeqQueue<U> &queue)
     }
 }
 
+#ifndef NO_SEQQUEUE_MAIN
 int main()
 {
     SeqQueue<int> queue;
@@ -152,3 +153,4 @@ int main()
 
     return 0;
 }
+#endif
