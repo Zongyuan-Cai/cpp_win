@@ -1,3 +1,0 @@
-E:/vscode/cpp/QT/build/CMakeFiles/QtTest.dir
-E:/vscode/cpp/QT/build/CMakeFiles/edit_cache.dir
-E:/vscode/cpp/QT/build/CMakeFiles/rebuild_cache.dir

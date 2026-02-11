@@ -1,8 +1,0 @@
-[
-{
-  "directory": "E:/vscode/cpp/QT/build",
-  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/QtTest.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\QtTest.dir\\main.cpp.obj -c E:\\vscode\\cpp\\QT\\main.cpp",
-  "file": "E:/vscode/cpp/QT/main.cpp",
-  "output": "CMakeFiles/QtTest.dir/main.cpp.obj"
-}
-]
