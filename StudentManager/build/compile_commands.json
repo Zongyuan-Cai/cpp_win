@@ -1,0 +1,38 @@
+[
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\main.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\main.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/main.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/main.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\core\\Student.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\core\\Student.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/core/Student.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/core/Student.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\core\\StudentManager.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\core\\StudentManager.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/core/StudentManager.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/core/StudentManager.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\core\\Menu.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\core\\Menu.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/core/Menu.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/core/Menu.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\storage\\FileManager.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\storage\\FileManager.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/storage/FileManager.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/storage/FileManager.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/StudentManager/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/StudentManager.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\StudentManager.dir\\src\\utils\\Utils.cpp.obj -c E:\\vscode\\cpp\\StudentManager\\src\\utils\\Utils.cpp",
+  "file": "E:/vscode/cpp/StudentManager/src/utils/Utils.cpp",
+  "output": "CMakeFiles/StudentManager.dir/src/utils/Utils.cpp.obj"
+}
+]
