@@ -1,3 +1,0 @@
-E:/vscode/cpp/StudentManager/build/CMakeFiles/StudentManager.dir
-E:/vscode/cpp/StudentManager/build/CMakeFiles/edit_cache.dir
-E:/vscode/cpp/StudentManager/build/CMakeFiles/rebuild_cache.dir
