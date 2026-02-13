@@ -69,6 +69,9 @@ C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/XL-CXX-DetermineCompiler.
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CompilerId/VS-10.vcxproj.in
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/ExternalProject/shared_internal_commands.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/FetchContent.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/FetchContent/CMakeLists.cmake.in
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Internal/FeatureTesting.cmake
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-Determine-CXX.cmake

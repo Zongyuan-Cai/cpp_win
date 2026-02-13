@@ -30,6 +30,15 @@ void Book::fromFileString(const std::string& s) {
     if (id_ >= nextId_) nextId_ = id_ + 1;
 }
 
+void Book::fromJson(const nlohmann::json& j) {
+    if (j.contains("id")) id_ = j["id"].get<int>();
+    if (j.contains("title")) title_ = j["title"].get<std::string>();
+    if (j.contains("author")) author_ = j["author"].get<std::string>();
+    if (j.contains("year")) year_ = j["year"].get<int>();
+    if (j.contains("borrowed")) borrowed_ = j["borrowed"].get<bool>();
+    if (id_ >= nextId_) nextId_ = id_ + 1;
+}
+
 // --- FictionBook ---
 FictionBook::FictionBook(const std::string& title, const std::string& author,
                          int year, const std::string& genre)
@@ -50,6 +59,23 @@ void FictionBook::fromFileString(const std::string& s) {
     if (last == std::string::npos) return;
     genre_ = s.substr(last + 1);
     Book::fromFileString(s.substr(0, last));
+}
+
+nlohmann::json FictionBook::toJson() const {
+    nlohmann::json j = nlohmann::json::object();
+    j["type"] = "FICTION";
+    j["id"] = id_;
+    j["title"] = title_;
+    j["author"] = author_;
+    j["year"] = year_;
+    j["borrowed"] = borrowed_;
+    j["genre"] = genre_;
+    return j;
+}
+
+void FictionBook::fromJson(const nlohmann::json& j) {
+    Book::fromJson(j);
+    if (j.contains("genre")) genre_ = j["genre"].get<std::string>();
 }
 
 // --- TechnicalBook ---
@@ -74,6 +100,23 @@ void TechnicalBook::fromFileString(const std::string& s) {
     Book::fromFileString(s.substr(0, last));
 }
 
+nlohmann::json TechnicalBook::toJson() const {
+    nlohmann::json j = nlohmann::json::object();
+    j["type"] = "TECHNICAL";
+    j["id"] = id_;
+    j["title"] = title_;
+    j["author"] = author_;
+    j["year"] = year_;
+    j["borrowed"] = borrowed_;
+    j["field"] = field_;
+    return j;
+}
+
+void TechnicalBook::fromJson(const nlohmann::json& j) {
+    Book::fromJson(j);
+    if (j.contains("field")) field_ = j["field"].get<std::string>();
+}
+
 // --- ReferenceBook ---
 ReferenceBook::ReferenceBook(const std::string& title, const std::string& author,
                              int year, bool encyclopedia)
@@ -94,4 +137,21 @@ void ReferenceBook::fromFileString(const std::string& s) {
     if (last == std::string::npos) return;
     encyclopedia_ = (s.substr(last + 1) == "1");
     Book::fromFileString(s.substr(0, last));
+}
+
+nlohmann::json ReferenceBook::toJson() const {
+    nlohmann::json j = nlohmann::json::object();
+    j["type"] = "REFERENCE";
+    j["id"] = id_;
+    j["title"] = title_;
+    j["author"] = author_;
+    j["year"] = year_;
+    j["borrowed"] = borrowed_;
+    j["encyclopedia"] = encyclopedia_;
+    return j;
+}
+
+void ReferenceBook::fromJson(const nlohmann::json& j) {
+    Book::fromJson(j);
+    if (j.contains("encyclopedia")) encyclopedia_ = j["encyclopedia"].get<bool>();
 }

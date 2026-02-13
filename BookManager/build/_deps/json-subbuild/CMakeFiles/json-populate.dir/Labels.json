@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/json-populate"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/6ddc97c484f5009872be8849aee7157d/json-populate.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/f8b407b589cc9027cc448c6c7ae231c8/json-populate-complete.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-build.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-configure.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-download.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-install.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-mkdir.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-patch.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-test.rule"
+		},
+		{
+			"file" : "E:/vscode/cpp/BookManager/build/_deps/json-subbuild/CMakeFiles/aced54905ef138907c6e4b2b561a7753/json-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"json-populate"
+		],
+		"name" : "json-populate"
+	}
+}

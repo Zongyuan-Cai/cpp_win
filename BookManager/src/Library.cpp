@@ -1,6 +1,8 @@
 #include "Library.h"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 
 Library::Library() : dataPath_("books.txt") {}
 
@@ -79,36 +81,40 @@ void Library::returnBook(int id) {
     }
 }
 
-// RAII 文件加载
+// 从 JSON 文件加载
 bool Library::loadFromFile(const std::string& path) {
-    FileReader reader(path);  // RAII: 析构时自动关闭
-    if (!reader.isOpen()) return false;
+    std::ifstream f(path);
+    if (!f.is_open()) return false;
+
+    std::string content((std::istreambuf_iterator<char>(f)),
+                         std::istreambuf_iterator<char>());
+    f.close();
+    if (content.empty()) return true;  // 空文件视为无数据，不报错
 
     books_.clear();
-    std::string line;
-    while (!reader.eof()) {
-        line = reader.readLine();
-        if (line.empty()) continue;
-
-        size_t sep = line.find('|');
-        if (sep == std::string::npos) continue;
-        std::string type = line.substr(0, sep);
-        std::string data = line.substr(sep + 1);
-
-        auto book = createBookFromLine(type, data);
-        if (book) books_.push_back(std::move(book));
+    try {
+        nlohmann::json j = nlohmann::json::parse(content);
+        if (!j.is_array()) return false;
+        for (const auto& item : j) {
+            auto book = createBookFromJson(item);
+            if (book) books_.push_back(std::move(book));
+        }
+    } catch (const std::exception&) {
+        return false;
     }
     return true;
 }
 
-// RAII 文件保存
+// 保存为 JSON 文件
 bool Library::saveToFile(const std::string& path) const {
-    FileWriter writer(path);  // RAII: 析构时自动刷新并关闭
+    FileWriter writer(path);
     if (!writer.isOpen()) return false;
 
+    nlohmann::json arr = nlohmann::json::array();
     for (const auto& b : books_) {
-        writer.stream() << b->toFileString() << '\n';  // 多态序列化
+        arr.push_back(b->toJson());
     }
+    writer.stream() << arr.dump(2);  // 缩进 2 空格，便于阅读
     return true;
 }
 
@@ -127,6 +133,27 @@ std::unique_ptr<Book> Library::createBookFromLine(const std::string& type,
     if (type == "REFERENCE") {
         auto p = std::make_unique<ReferenceBook>("", "", 0, false);
         p->fromFileString(data);
+        return p;
+    }
+    return nullptr;
+}
+
+std::unique_ptr<Book> Library::createBookFromJson(const nlohmann::json& j) {
+    if (!j.contains("type") || !j["type"].is_string()) return nullptr;
+    std::string type = j["type"].get<std::string>();
+    if (type == "FICTION") {
+        auto p = std::make_unique<FictionBook>("", "", 0);
+        p->fromJson(j);
+        return p;
+    }
+    if (type == "TECHNICAL") {
+        auto p = std::make_unique<TechnicalBook>("", "", 0);
+        p->fromJson(j);
+        return p;
+    }
+    if (type == "REFERENCE") {
+        auto p = std::make_unique<ReferenceBook>("", "", 0, false);
+        p->fromJson(j);
         return p;
     }
     return nullptr;

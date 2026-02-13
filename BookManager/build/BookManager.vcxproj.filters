@@ -18,6 +18,9 @@
     <CustomBuild Include="E:\vscode\cpp\BookManager\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Natvis Include="E:\vscode\cpp\BookManager\build\_deps\json-src\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{79515C61-BBDE-3060-B300-60A0727FC926}</UniqueIdentifier>
     </Filter>

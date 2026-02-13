@@ -1,5 +1,5 @@
 #include "Library.h"
-#include "Book.h"
+#include "Book.h"s
 #include <iostream>
 #include <string>
 #include <limits>
@@ -26,7 +26,7 @@ void showMenu() {
 
 int main() {
     Library lib;  // RAII: 析构时自动释放所有 unique_ptr<Book>
-    const std::string dataPath = "books.txt";
+    const std::string dataPath = "books.json";
 
     // 启动时自动加载
     if (lib.loadFromFile(dataPath)) {

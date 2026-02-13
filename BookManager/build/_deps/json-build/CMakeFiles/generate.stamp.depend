@@ -1,0 +1,10 @@
+# CMake generation dependency list for this directory.
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakePackageConfigHelpers.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/ExternalProject.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/ExternalProject/shared_internal_commands.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/GNUInstallDirs.cmake
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/WriteBasicConfigVersionFile.cmake
+E:/vscode/cpp/BookManager/build/_deps/json-src/CMakeLists.txt
+E:/vscode/cpp/BookManager/build/_deps/json-src/cmake/config.cmake.in
+E:/vscode/cpp/BookManager/build/_deps/json-src/cmake/nlohmann_jsonConfigVersion.cmake.in
+E:/vscode/cpp/BookManager/build/_deps/json-src/cmake/pkg-config.pc.in

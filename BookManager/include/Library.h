@@ -3,6 +3,7 @@
 
 #include "Book.h"
 #include "FileManager.h"
+#include <nlohmann/json.hpp>
 #include <vector>
 #include <memory>
 #include <string>
@@ -33,6 +34,7 @@ private:
 
     std::unique_ptr<Book> createBookFromLine(const std::string& type,
                                              const std::string& data);
+    std::unique_ptr<Book> createBookFromJson(const nlohmann::json& j);
 };
 
 #endif // LIBRARY_H

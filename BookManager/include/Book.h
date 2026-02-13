@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <ostream>
+#include <nlohmann/json.hpp>
 
 // 抽象基类 - 多态设计
 class Book {
@@ -15,6 +16,8 @@ public:
     virtual void display() const;                    // 可被派生类重写
     virtual std::string toFileString() const;        // 序列化，多态
     virtual void fromFileString(const std::string&); // 反序列化，多态
+    virtual nlohmann::json toJson() const = 0;       // JSON 序列化
+    virtual void fromJson(const nlohmann::json& j);  // JSON 反序列化（基类读公共字段，派生类 override 读自身）
 
     const std::string& getTitle() const { return title_; }
     const std::string& getAuthor() const { return author_; }
@@ -41,6 +44,8 @@ public:
     void display() const override;
     std::string toFileString() const override;
     void fromFileString(const std::string& s) override;
+    nlohmann::json toJson() const override;
+    void fromJson(const nlohmann::json& j) override;
     const std::string& getGenre() const { return genre_; }
 
 private:
@@ -56,6 +61,8 @@ public:
     void display() const override;
     std::string toFileString() const override;
     void fromFileString(const std::string& s) override;
+    nlohmann::json toJson() const override;
+    void fromJson(const nlohmann::json& j) override;
     const std::string& getField() const { return field_; }
 
 private:
@@ -71,6 +78,8 @@ public:
     void display() const override;
     std::string toFileString() const override;
     void fromFileString(const std::string& s) override;
+    nlohmann::json toJson() const override;
+    void fromJson(const nlohmann::json& j) override;
     bool isEncyclopedia() const { return encyclopedia_; }
 
 private:
