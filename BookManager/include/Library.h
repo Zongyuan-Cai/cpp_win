@@ -32,8 +32,6 @@ private:
     std::vector<std::unique_ptr<Book>> books_;  // RAII: unique_ptr 管理动态内存
     std::string dataPath_;
 
-    std::unique_ptr<Book> createBookFromLine(const std::string& type,
-                                             const std::string& data);
     std::unique_ptr<Book> createBookFromJson(const nlohmann::json& j);
 };
 

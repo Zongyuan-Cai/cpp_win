@@ -2,9 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
-#include <sstream>
 
-Library::Library() : dataPath_("books.txt") {}
+Library::Library() : dataPath_("books.json") {}
 
 void Library::addBook(std::unique_ptr<Book> book) {
     if (book) {
@@ -89,6 +88,7 @@ bool Library::loadFromFile(const std::string& path) {
     std::string content((std::istreambuf_iterator<char>(f)),
                          std::istreambuf_iterator<char>());
     f.close();
+    
     if (content.empty()) return true;  // 空文件视为无数据，不报错
 
     books_.clear();
@@ -116,26 +116,6 @@ bool Library::saveToFile(const std::string& path) const {
     }
     writer.stream() << arr.dump(2);  // 缩进 2 空格，便于阅读
     return true;
-}
-
-std::unique_ptr<Book> Library::createBookFromLine(const std::string& type,
-                                                   const std::string& data) {
-    if (type == "FICTION") {
-        auto p = std::make_unique<FictionBook>("", "", 0);
-        p->fromFileString(data);
-        return p;
-    }
-    if (type == "TECHNICAL") {
-        auto p = std::make_unique<TechnicalBook>("", "", 0);
-        p->fromFileString(data);
-        return p;
-    }
-    if (type == "REFERENCE") {
-        auto p = std::make_unique<ReferenceBook>("", "", 0, false);
-        p->fromFileString(data);
-        return p;
-    }
-    return nullptr;
 }
 
 std::unique_ptr<Book> Library::createBookFromJson(const nlohmann::json& j) {

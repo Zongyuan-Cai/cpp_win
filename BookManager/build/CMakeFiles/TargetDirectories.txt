@@ -1,4 +1,3 @@
 E:/vscode/cpp/BookManager/build/CMakeFiles/BookManager.dir
-E:/vscode/cpp/BookManager/build/CMakeFiles/ALL_BUILD.dir
-E:/vscode/cpp/BookManager/build/CMakeFiles/ZERO_CHECK.dir
-E:/vscode/cpp/BookManager/build/_deps/json-build/CMakeFiles/ALL_BUILD.dir
+E:/vscode/cpp/BookManager/build/CMakeFiles/edit_cache.dir
+E:/vscode/cpp/BookManager/build/CMakeFiles/rebuild_cache.dir

@@ -14,8 +14,6 @@ public:
 
     virtual std::string getType() const = 0;        // 纯虚函数
     virtual void display() const;                    // 可被派生类重写
-    virtual std::string toFileString() const;        // 序列化，多态
-    virtual void fromFileString(const std::string&); // 反序列化，多态
     virtual nlohmann::json toJson() const = 0;       // JSON 序列化
     virtual void fromJson(const nlohmann::json& j);  // JSON 反序列化（基类读公共字段，派生类 override 读自身）
 
@@ -42,8 +40,6 @@ public:
                 const std::string& genre = "未分类");
     std::string getType() const override { return "文学"; }
     void display() const override;
-    std::string toFileString() const override;
-    void fromFileString(const std::string& s) override;
     nlohmann::json toJson() const override;
     void fromJson(const nlohmann::json& j) override;
     const std::string& getGenre() const { return genre_; }
@@ -59,8 +55,6 @@ public:
                   const std::string& field = "未分类");
     std::string getType() const override { return "技术"; }
     void display() const override;
-    std::string toFileString() const override;
-    void fromFileString(const std::string& s) override;
     nlohmann::json toJson() const override;
     void fromJson(const nlohmann::json& j) override;
     const std::string& getField() const { return field_; }
@@ -76,8 +70,6 @@ public:
                   bool encyclopedia = false);
     std::string getType() const override { return "参考"; }
     void display() const override;
-    std::string toFileString() const override;
-    void fromFileString(const std::string& s) override;
     nlohmann::json toJson() const override;
     void fromJson(const nlohmann::json& j) override;
     bool isEncyclopedia() const { return encyclopedia_; }
