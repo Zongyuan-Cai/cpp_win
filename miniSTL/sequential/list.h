@@ -31,11 +31,11 @@ public:
         node(const T& v) : value(v) {}
         node(T&& v) : value(std::move(v)) {}
         template <typename... Args>
-        node(Args&&... args) : value(std::forward<Args>(args)...) {}
+        node(Args&&... args) : value(std::forward<Args>(args)...) {}//多个参数构造成一个节点
     };
 
     using node_allocator = typename std::allocator_traits<Allocator>::template rebind_alloc<node>;
-
+    //将T的allocator转成node的allocator
     class iterator {
     public:
         using value_type        = T;
@@ -153,7 +153,7 @@ public:
 private:
     Allocator alloc_;
     node_allocator node_alloc_;
-    node_base head_;
+    node_base head_;//头节点
     size_type size_;
 
     node* create_node(const T& value) {
@@ -184,7 +184,6 @@ private:
 
 } // namespace miniSTL
 
-// ========== 模板实现 ==========
 namespace miniSTL {
 
 template <typename T, typename Allocator>

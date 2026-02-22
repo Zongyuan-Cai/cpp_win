@@ -167,7 +167,6 @@ private:
 
 } // namespace miniSTL
 
-// ========== 模板实现 ==========
 namespace miniSTL {
 
 template <typename T, typename Allocator>

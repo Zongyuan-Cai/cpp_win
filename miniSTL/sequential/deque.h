@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <memory>
 #include <initializer_list>
+#include <algorithm>
 
 namespace miniSTL {
 
@@ -198,7 +199,6 @@ private:
 
 } // namespace miniSTL
 
-// ========== 模板实现 ==========
 namespace miniSTL {
 
 template <typename T, typename Allocator>
@@ -509,6 +509,18 @@ void deque<T, Allocator>::swap(deque& other) noexcept {
     std::swap(cap_, other.cap_);
     std::swap(start_, other.start_);
     std::swap(size_, other.size_);
+}
+
+template <typename T, typename Allocator>
+bool operator==(const deque<T, Allocator>& a, const deque<T, Allocator>& b) {
+    if (a.size() != b.size()) return false;
+    for (typename deque<T, Allocator>::size_type i = 0; i < a.size(); ++i)
+        if (a[i] != b[i]) return false;
+    return true;
+}
+template <typename T, typename Allocator>
+bool operator<(const deque<T, Allocator>& a, const deque<T, Allocator>& b) {
+    return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 } // namespace miniSTL

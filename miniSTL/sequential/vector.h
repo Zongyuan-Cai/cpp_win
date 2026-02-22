@@ -55,7 +55,7 @@ public:
         bool operator>=(const iterator& other) const { return ptr_ >= other.ptr_; }
 
         pointer base() const { return ptr_; }
-
+        //拿到原始指针
     private:
         pointer ptr_;
     };
@@ -106,7 +106,7 @@ public:
     template <typename InputIt>
     vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());
     vector(const vector& other);
-    vector(vector&& other) noexcept;
+    vector(vector&& other) noexcept;//noexcept不抛异常，优先移动构造
     vector(std::initializer_list<T> init, const Allocator& alloc = Allocator());
 
     ~vector();
@@ -128,7 +128,7 @@ public:
     const_reference operator[](size_type pos) const { return start_[pos]; }
     reference front() { return *start_; }
     const_reference front() const { return *start_; }
-    reference back() { return *(finish_ - 1); }
+    reference back() { return *(finish_ - 1); }//左闭右开区间
     const_reference back() const { return *(finish_ - 1); }
     pointer data() { return start_; }
     const_pointer data() const { return start_; }
@@ -177,7 +177,6 @@ private:
 
 } // namespace miniSTL
 
-// ========== 模板实现 ==========
 namespace miniSTL {
 
 template <typename T, typename Allocator>

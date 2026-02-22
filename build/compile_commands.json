@@ -1,0 +1,26 @@
+[
+{
+  "directory": "E:/vscode/cpp/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/BookManager.dir/includes_CXX.rsp -g -std=gnu++17 -finput-charset=UTF-8 -fexec-charset=UTF-8 -o CMakeFiles\\BookManager.dir\\src\\main.cpp.obj -c E:\\vscode\\cpp\\BookManager\\src\\main.cpp",
+  "file": "E:/vscode/cpp/BookManager/src/main.cpp",
+  "output": "CMakeFiles/BookManager.dir/src/main.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/BookManager.dir/includes_CXX.rsp -g -std=gnu++17 -finput-charset=UTF-8 -fexec-charset=UTF-8 -o CMakeFiles\\BookManager.dir\\src\\Book.cpp.obj -c E:\\vscode\\cpp\\BookManager\\src\\Book.cpp",
+  "file": "E:/vscode/cpp/BookManager/src/Book.cpp",
+  "output": "CMakeFiles/BookManager.dir/src/Book.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/BookManager.dir/includes_CXX.rsp -g -std=gnu++17 -finput-charset=UTF-8 -fexec-charset=UTF-8 -o CMakeFiles\\BookManager.dir\\src\\FileManager.cpp.obj -c E:\\vscode\\cpp\\BookManager\\src\\FileManager.cpp",
+  "file": "E:/vscode/cpp/BookManager/src/FileManager.cpp",
+  "output": "CMakeFiles/BookManager.dir/src/FileManager.cpp.obj"
+},
+{
+  "directory": "E:/vscode/cpp/build",
+  "command": "C:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe  @CMakeFiles/BookManager.dir/includes_CXX.rsp -g -std=gnu++17 -finput-charset=UTF-8 -fexec-charset=UTF-8 -o CMakeFiles\\BookManager.dir\\src\\Library.cpp.obj -c E:\\vscode\\cpp\\BookManager\\src\\Library.cpp",
+  "file": "E:/vscode/cpp/BookManager/src/Library.cpp",
+  "output": "CMakeFiles/BookManager.dir/src/Library.cpp.obj"
+}
+]
