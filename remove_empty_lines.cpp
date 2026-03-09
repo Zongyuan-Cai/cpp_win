@@ -45,14 +45,20 @@ void process_file(const std::string& path) {
     std::cout << path << ": 已删除空行\n";
 }
 
+void print_usage(const char* prog) {
+    std::cout << "删除文本文件中的空行（二进制读写，不改变编码）\n\n"
+              << "用法: " << (prog && prog[0] ? prog : "remove_empty_lines") << " <文件1> [文件2] [文件3] ...\n\n"
+              << "示例:\n"
+              << "  " << (prog && prog[0] ? prog : "remove_empty_lines") << " a.txt\n"
+              << "  " << (prog && prog[0] ? prog : "remove_empty_lines") << " a.txt b.txt \"book (1).txt\"\n";
+}
+
 int main(int argc, char* argv[]) {
-    std::string files[] = {"book2.txt", "book3.txt", "book6.txt", "book7.txt"};
-    if (argc > 1) {
-        for (int i = 1; i < argc; ++i)
-            process_file(argv[i]);
-    } else {
-        for (const auto& f : files)
-            process_file(f);
+    if (argc < 2) {
+        print_usage(argv[0]);
+        return 1;
     }
+    for (int i = 1; i < argc; ++i)
+        process_file(argv[i]);
     return 0;
 }
