@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdftotext -v)",
+      "Bash(pdftotext Lab2\\\\\\(1\\\\\\).pdf output.txt)",
+      "Bash(pdftotext -layout Lab2\\\\\\(1\\\\\\).pdf output2.txt)",
+      "Bash(g++ --version)",
+      "Bash(g++ -o 1.exe 1.cpp)",
+      "Bash(./1.exe)",
+      "Bash(g++ -o 2.exe 2.cpp)",
+      "Bash(./2.exe)",
+      "Bash(g++ -o 3.exe 3.cpp)",
+      "Bash(./3.exe)",
+      "Bash(g++ -o 4.exe 4.cpp)",
+      "Bash(./4.exe)",
+      "Bash(cd:*)",
+      "Bash(pdftotext -raw Lab2\\\\\\(1\\\\\\).pdf output3.txt)",
+      "Bash(pdftotext Lab1.pdf lab1_output.txt)",
+      "Bash(pdftotext:*)",
+      "Bash(qpdf --version)"
+    ]
+  }
+}
