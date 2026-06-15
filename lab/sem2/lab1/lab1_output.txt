@@ -1,32 +1,0 @@
-
-Lab1 
-
-1.  2. 
-
-
-1.  Complex 
-realPart + imaginaryPart * i   i    double        private    realPart      imaginaryPart  public a) Complex b) Complex  c) (a, b)Complexab 2. 
-Rectangle
-1.   "Rectangle """""  1  0.020.0
-1
-
-2. 
-
-
-
-()
-1. 
-Rational 
-private ( )2/4  1/2public:
-a) b) c) d) e) a/b ab  f)
-2. 
-
-Time
-1.  9.49.5TimetickTime
-2
-
-
-1Time tick tick a)  b)  c) 11:59:59 PM 12:00:00 AM 2. 
-3
-
-
