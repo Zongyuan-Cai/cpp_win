@@ -1,253 +1,253 @@
-# Chapter 10: Operator Overloading — Knowledge Points
+# 第10章：运算符重载 — 知识点
 
-## 10.1 Introduction
-- Operator overloading makes programs more readable and programming more convenient
-- Built-in operators already overloaded: `operator+(int,int)` vs `operator+(double,double)`
-- Operator overloading for user-defined objects is generally necessary for class objects
-- Straightforward and natural way to extend C++
+## 10.1 引言
+- 运算符重载使程序更易读，编程更方便
+- 内置运算符已被重载：`operator+(int,int)` vs `operator+(double,double)`
+- 对用户自定义对象的运算符重载通常是类对象所必需的
+- 扩展 C++ 的直接而自然的方式
 
-## 10.2 Fundamentals of Operator Overloading
+## 10.2 运算符重载基础
 
-### Basic concept
-- To use an operator on a class object, it must be overloaded for that class
-- **Three exceptions** (can also be overloaded): assignment (`=`), address (`&`), comma (`,`)
-- Overloading provides concise notation:
+### 基本概念
+- 要在类对象上使用运算符，必须为该类重载该运算符
+- **三个例外**（也可以被重载）：赋值（`=`）、取地址（`&`）、逗号（`,`）
+- 重载提供简洁的表示法：
   - `complex1.add(complex2)` → `complex1 + complex2`
 
-### Operator function definition:
-- Function name: `operator@` (keyword `operator` + operand symbol `@`)
-- Example: `Complex operator+(const Complex& a);`
+### 运算符函数定义：
+- 函数名：`operator@`（关键字 `operator` + 操作符 `@`）
+- 示例：`Complex operator+(const Complex& a);`
 
-### Operator function invocation:
-- `complex1 + complex2;` — compiler interprets as function call
+### 运算符函数调用：
+- `complex1 + complex2;` — 编译器将其解释为函数调用
 
-## 10.3 Restrictions on Operator Overloading
+## 10.3 运算符重载的限制
 
-### Cannot:
-- Create **new** operators
-- Change **precedence** of operator
-- Change **associativity** (left-to-right / right-to-left)
-- Change **number of operands** (arity)
+### 不能：
+- 创建**新的**运算符
+- 改变运算符的**优先级**
+- 改变**结合性**（左到右 / 右到左）
+- 改变**操作数个数**（元数）
 
-### Unary/binary/ternary:
-| Operator type | Examples |
+### 一元/二元/三元：
+| 运算符类型 | 示例 |
 |--------------|----------|
-| Unary | `+1`, `-1`, `!0`, ... |
-| Binary | `1+2`, `1-2`, `1*2`, ... |
-| Ternary | `?:` (only ternary operator) |
+| 一元 | `+1`、`-1`、`!0`…… |
+| 二元 | `1+2`、`1-2`、`1*2`…… |
+| 三元 | `?:`（唯一的三元运算符） |
 
-### Unary operators that can also be binary: `+`, `-`, `*`, `&`
+### 也可以用作二元的一元运算符：`+`、`-`、`*`、`&`
 
-### Important restriction:
-- How an operator works on **fundamental types** cannot be changed
-- Operator overloading works only with objects of **user-defined types**
-- `int + int` — cannot be changed; `complex + complex` — can be overloaded; `complex + int` — can be defined
+### 重要限制：
+- 运算符对**基本类型**的工作方式不能改变
+- 运算符重载仅适用于**用户自定义类型**的对象
+- `int + int` — 不能改变；`complex + complex` — 可以重载；`complex + int` — 可以定义
 
-## 10.4 Operator Functions as Class Members vs. Global Functions
+## 10.4 运算符函数作为类成员 vs. 全局函数
 
-### As member function:
+### 作为成员函数：
 ```cpp
 class String {
 public:
     bool operator!() const;
 };
-// Definition:
+// 定义：
 T ClassName::operator op (...) {
-    // function body
+    // 函数体
 }
 ```
-- Uses `*this` to implicitly get the left (or only) operand
-- Left operand must be an object (or reference) of the **same class**
-- Number of parameters = **Number of operands - 1**
-- **Operators `()`, `[]`, `->` or any assignment operator must be overloaded as member function**
+- 使用 `*this` 隐式获取左（或唯一）操作数
+- 左操作数必须是**同类**的对象（或引用）
+- 参数个数 = **操作数个数 - 1**
+- **运算符 `()`、`[]`、`->` 或任何赋值运算符必须作为成员函数重载**
 
-### Examples (member function):
+### 示例（成员函数）：
 ```cpp
 a3 = a1 * a2;    →  a3 = a1.operator*(a2);
 a3 = a1++;       →  a3 = a1.operator++();
 a3 += a1;        →  a3.operator+=(a1);
 ```
 
-### As global function:
+### 作为全局函数：
 ```cpp
 T operator op (...) {
-    // function body
+    // 函数体
 }
 ```
-- No `this` pointer
-- Needs parameters for **all** operands
-- Number of parameters = **Number of operands**
-- Can have left object of different class or fundamental type
-- Can be a **friend** to access non-public data
+- 没有 `this` 指针
+- 需要**所有**操作数的参数
+- 参数个数 = **操作数个数**
+- 左对象可以是不同类或基本类型
+- 可以是 **friend** 以访问非公有数据
 
-### Examples (global function):
+### 示例（全局函数）：
 ```cpp
 a3 = a1 * a2;    →  a3 = operator*(a1, a2);
 a3 = a1++;       →  a3 = operator++(a1);
 a3 += a1;        →  operator+=(a3, a1);
 ```
 
-### Commutative operators:
-- For `+` to be commutative (both `a+b` and `b+a` work with different classes):
-  - `ComplexClass + int` and `int + ComplexClass` — may need global function
+### 交换律运算符：
+- 要使 `+` 满足交换律（`a+b` 和 `b+a` 对不同类都适用）：
+  - `ComplexClass + int` 和 `int + ComplexClass` — 可能需要全局函数
 
-## 10.5 Overloading Stream Insertion and Stream Extraction Operators
+## 10.5 重载流插入和流提取运算符
 
-### `<<` operator (stream insertion):
+### `<<` 运算符（流插入）：
 ```cpp
 ostream &operator<<(ostream &output, const PhoneNumber &number) {
     output << ... ;
-    return output;  // enables cascading: cout << a << b;
+    return output;  // 允许级联：cout << a << b;
 }
 ```
-- Must be a **global function** (left operand is `ostream`, not the user class)
-- Return reference to `ostream` for **cascading** calls
+- 必须是**全局函数**（左操作数是 `ostream`，不是用户类）
+- 返回 `ostream` 的引用以支持**级联**调用
 
-### `>>` operator (stream extraction):
+### `>>` 运算符（流提取）：
 ```cpp
 istream &operator>>(istream &input, PhoneNumber &number) {
     input >> ...;
-    return input;  // enables cascading: cin >> a >> b;
+    return input;  // 允许级联：cin >> a >> b;
 }
 ```
-- Uses `input.ignore()` to skip characters
-- Uses `setw(n)` to restrict number of characters read
+- 使用 `input.ignore()` 跳过字符
+- 使用 `setw(n)` 限制读取的字符数
 
-### Example: PhoneNumber class
-- Stores: `areaCode` (3 digits), `exchange` (3 digits), `line` (4 digits)
-- Format: `(123) 456-7890`
-- `cin >> phone` reads: skip `(`, read 3-digit area code, skip `)` and space, read 3-digit exchange, skip `-`, read 4-digit line
-- `cout << phone` outputs: `(areaCode) exchange-line`
+### 示例：PhoneNumber 类
+- 存储：`areaCode`（3位）、`exchange`（3位）、`line`（4位）
+- 格式：`(123) 456-7890`
+- `cin >> phone` 读取：跳过 `(`，读取3位区号，跳过 `)` 和空格，读取3位交换码，跳过 `-`，读取4位号码
+- `cout << phone` 输出：`(areaCode) exchange-line`
 
-## 10.6 Overloading Unary Operators
+## 10.6 重载一元运算符
 
-### Two ways:
+### 两种方式：
 
-**(1) As non-static member function with NO argument:**
-- Interpreted as: `Object.operator op()`
-- `this` serves as the implicit operand
+**（1）作为无参数的非静态成员函数：**
+- 解释为：`Object.operator op()`
+- `this` 作为隐式操作数
 
-**(2) As global function with ONE argument:**
-- Argument must be an object (or reference) of the class
-- Interpreted as: `operator op(Object)`
+**（2）作为带一个参数的全局函数：**
+- 参数必须是类的对象（或引用）
+- 解释为：`operator op(Object)`
 
-## 10.7 Overloading Binary Operators
+## 10.7 重载二元运算符
 
-### Two ways:
+### 两种方式：
 
-**(1) As non-static member function with ONE argument:**
-- Interpreted as: `ObjectL.operator op(ObjectR)`
-- `this` → ObjectL; parameter → ObjectR
+**（1）作为带一个参数的非静态成员函数：**
+- 解释为：`ObjectL.operator op(ObjectR)`
+- `this` → ObjectL；参数 → ObjectR
 
-**(2) As global function with TWO arguments:**
-- Interpreted as: `operator op(ObjectL, ObjectR)`
+**（2）作为带两个参数的全局函数：**
+- 解释为：`operator op(ObjectL, ObjectR)`
 
-## 10.8 Case Study: Array Class (Fig. 10.10~10.11)
+## 10.8 案例研究：Array 类（图 10.10~10.11）
 
-### Key features:
-- Dynamically allocated integer array
-- Default constructor: `Array(int = 10)`
-- Copy constructor: `Array(const Array &)` — deep copy
-- Destructor: `~Array()` — releases `delete[] ptr`
-- Assignment operator: `const Array &operator=(const Array &)` — checks for self-assignment, reallocates if size differs
-- Equality: `bool operator==(const Array &) const`
-- Inequality: `bool operator!=(const Array &right) const { return !(*this == right); }` — reuses `==`
-- Subscript (lvalue): `int &operator[](int)` — returns reference, allows modification
-- Subscript (rvalue): `int operator[](int) const` — returns copy, for const objects
-- Stream operators: `friend ostream &operator<<` and `friend istream &operator>>`
+### 关键特性：
+- 动态分配的整数数组
+- 默认构造函数：`Array(int = 10)`
+- 复制构造函数：`Array(const Array &)` — 深复制
+- 析构函数：`~Array()` — 释放 `delete[] ptr`
+- 赋值运算符：`const Array &operator=(const Array &)` — 检查自赋值，大小不同时重新分配
+- 相等判断：`bool operator==(const Array &) const`
+- 不等判断：`bool operator!=(const Array &right) const { return !(*this == right); }` — 重用 `==`
+- 下标（左值）：`int &operator[](int)` — 返回引用，允许修改
+- 下标（右值）：`int operator[](int) const` — 返回副本，用于 const 对象
+- 流运算符：`friend ostream &operator<<` 和 `friend istream &operator>>`
 
-### Assignment operator pattern:
-1. Check for **self-assignment**: `if (&right != this)`
-2. If sizes differ, `delete[]` old, allocate new
-3. Copy elements
-4. Return `*this` (enables cascading: `x = y = z`)
+### 赋值运算符模式：
+1. 检查**自赋值**：`if (&right != this)`
+2. 如果大小不同，`delete[]` 旧数组，分配新数组
+3. 复制元素
+4. 返回 `*this`（允许级联：`x = y = z`）
 
-## 10.9 Converting Between Types
+## 10.9 类型之间的转换
 
-### Two directions:
+### 两个方向：
 
-**(1) Conversion Constructor — Other type → Class type:**
-- Single-argument constructor
-- Converts fundamental type or another class type to this class type
-- Format: `ClassName(T) { ... // converting methods }`
+**（1）转换构造函数 — 其他类型 → 类类型：**
+- 单参数构造函数
+- 将基本类型或另一个类类型转换为本类类型
+- 格式：`ClassName(T) { ... // 转换方法 }`
 
-**(2) Conversion/Cast Operator — Class type → Other type:**
-- A special member function
-- Converts this class type to fundamental type or another class type
-- Format:
+**（2）转换/类型转换运算符 — 类类型 → 其他类型：**
+- 一种特殊的成员函数
+- 将本类类型转换为基本类型或另一个类类型
+- 格式：
 ```cpp
 ClassName::operator T() {
-    // converting methods
+    // 转换方法
     return data_Of_T;
 }
 ```
-- Is a **non-static member function**
-- Target type `T` can be fundamental or user-defined
-- **No parameters, no return type**, but must return an object of type `T`
+- 是一个**非静态成员函数**
+- 目标类型 `T` 可以是基本类型或用户自定义类型
+- **无参数，无返回类型**，但必须返回一个 `T` 类型的对象
 
-## 10.10 Case Study: String Class (Fig. 10.1)
+## 10.10 案例研究：String 类（图 10.1）
 
-### Key features:
-- Dynamic char array (`char *sPtr`) + length tracking
-- **Conversion/default constructor**: `String(const char * = "")` — converts `char*` to String
-- **Copy constructor**: `String(const String &)`
-- **Destructor**: `~String()` — releases dynamic memory
-- **Assignment operator**: `const String &operator=(const String &)`
-- **Concatenation**: `const String &operator+=(const String &)`
-- **Empty test**: `bool operator!() const` — is String empty?
-- **Relational operators**: `==`, `!=` (reuses `==`), `<`, `>` (reuses `<`), `<=` (reuses `<`)
-  - Demonstrates **code reusability**: `!=` calls `==`, `>` calls `<`, `<=` calls `>`
-- **Subscript operators**: `char &operator[](int)` (lvalue) and `char operator[](int) const` (rvalue)
-- **Function call operator (substring)**: `String operator()(int index, int subLength = 0) const`
-- **Utility function**: `void setString(const char *)` — called by constructors and `operator=`
+### 关键特性：
+- 动态字符数组（`char *sPtr`）+ 长度跟踪
+- **转换/默认构造函数**：`String(const char * = "")` — 将 `char*` 转换为 String
+- **复制构造函数**：`String(const String &)`
+- **析构函数**：`~String()` — 释放动态内存
+- **赋值运算符**：`const String &operator=(const String &)`
+- **拼接**：`const String &operator+=(const String &)`
+- **判空**：`bool operator!() const` — String 是否为空？
+- **关系运算符**：`==`、`!=`（重用 `==`）、`<`、`>`（重用 `<`）、`<=`（重用 `>`）
+  - 展示了**代码可重用性**：`!=` 调用 `==`，`>` 调用 `<`，`<=` 调用 `>`
+- **下标运算符**：`char &operator[](int)`（左值）和 `char operator[](int) const`（右值）
+- **函数调用运算符（子串）**：`String operator()(int index, int subLength = 0) const`
+- **工具函数**：`void setString(const char *)` — 被构造函数和 `operator=` 调用
 
-## 10.11 Overloading ++ and --
+## 10.11 重载 ++ 和 --
 
-### Prefix increment (++x):
-- Returns by **reference**: `Date &operator++()`
-- Modifies object, returns `*this` (creates an lvalue)
+### 前缀自增（++x）：
+- 通过**引用**返回：`Date &operator++()`
+- 修改对象，返回 `*this`（创建左值）
 
-### Postfix increment (x++):
-- Has a dummy `int` parameter (unnamed) to distinguish from prefix
-- Returns by **value**: `Date operator++(int)`
-- Saves current state in temp, increments, returns **unincremented temp** (not a reference)
+### 后缀自增（x++）：
+- 有一个哑元 `int` 参数（未命名）以区别于前缀
+- 通过**值**返回：`Date operator++(int)`
+- 将当前状态保存在临时对象中，自增，返回**未自增的临时对象**（不是引用）
 
 ```cpp
-Date &Date::operator++() {      // prefix
+Date &Date::operator++() {      // 前缀
     helpIncrement();
     return *this;
 }
-Date Date::operator++(int) {    // postfix
+Date Date::operator++(int) {    // 后缀
     Date temp = *this;
     helpIncrement();
-    return temp;  // value return, not reference
+    return temp;  // 值返回，不是引用
 }
 ```
 
-## 10.12 Case Study: Date Class (Fig. 10.6~10.7)
+## 10.12 案例研究：Date 类（图 10.6~10.7）
 
-### Features:
-- Default constructor, `setDate()`, `leapYear()`, `endOfMonth()`
-- Prefix/postfix `++` overloaded
-- `+=` operator: `const Date &operator+=(int)` — returns `*this` for cascading
-- `<<` operator: outputs "Month day, year" format
-- Utility function: `helpIncrement()` — handles day/month/year rollover
+### 特性：
+- 默认构造函数、`setDate()`、`leapYear()`、`endOfMonth()`
+- 前缀/后缀 `++` 重载
+- `+=` 运算符：`const Date &operator+=(int)` — 返回 `*this` 支持级联
+- `<<` 运算符：输出 "Month day, year" 格式
+- 工具函数：`helpIncrement()` — 处理日/月/年进位
 
-## 10.13 Standard Library Class string
-- C++ standard class: `#include <string>` (mentioned for reference, similar to the custom String class)
+## 10.13 标准库类 string
+- C++ 标准类：`#include <string>`（作为参考提及，类似于自定义的 String 类）
 
-## 10.14 Explicit Constructors
-- Keyword `explicit` on single-argument constructor prevents **implicit** conversion
-- `explicit Array(int = 10);` — prevents accidental conversion `outputArray(3)` from converting int to Array
-- Without `explicit`, `3` would be silently converted to `Array(3)`
+## 10.14 显式构造函数
+- 单参数构造函数上的关键字 `explicit` 防止**隐式**转换
+- `explicit Array(int = 10);` — 防止意外转换 `outputArray(3)` 将 int 转换为 Array
+- 没有 `explicit`，`3` 会被静默转换为 `Array(3)`
 
 ---
 
-## Summary:
-1. What operators can be overloaded, when, how, and restrictions
-2. Member function vs. global function approaches
-3. Overloading unary and binary operators
-4. Conversion constructor (→ class type) vs. conversion operator (class type →)
-5. Array, String, Date class case studies
-6. Prefix vs. postfix `++`/`--`
-7. Explicit constructors
+## 小结：
+1. 哪些运算符可以重载、何时、如何以及限制
+2. 成员函数 vs. 全局函数的方法
+3. 重载一元和二元运算符
+4. 转换构造函数（→ 类类型）vs. 转换运算符（类类型 →）
+5. Array、String、Date 类案例研究
+6. 前缀 vs. 后缀 `++`/`--`
+7. 显式构造函数

@@ -1,49 +1,49 @@
-# Chapter 9: Classes — A Deeper Look (Part I) — Knowledge Points
+# 第9章：类的深入探索（上）— 知识点
 
-## 9.1 Introduction
-- Integrated Time class case study (3 versions, each adding new features)
-- Preprocessor wrapper — prevent multiple definition errors
-- Two ways to define member functions (inside or outside class)
-- class handles (object name / reference / pointer)
-- Two kinds of member functions: predicate function & utility function
+## 9.1 引言
+- 集成 Time 类案例研究（3个版本，每个版本添加新特性）
+- 预处理器包装器 — 防止多重定义错误
+- 两种定义成员函数的方式（类内或类外）
+- 类句柄（对象名 / 引用 / 指针）
+- 两种成员函数：判断函数 & 工具函数
 
-## 9.2 Time Class Case Study
+## 9.2 Time 类案例研究
 
-### Preprocessors
-- `#define` — define macro (e.g. `#define PI 3.1415926`)
-- `#include` — include header file
-- Conditional compilation directives:
+### 预处理器
+- `#define` — 定义宏（例如 `#define PI 3.1415926`）
+- `#include` — 包含头文件
+- 条件编译指令：
   - `#ifdef FLAG` ... `#endif`
   - `#ifndef FLAG` ... `#endif`
   - `#define FLAG`
   - `#undef FLAG`
   - `#else`
 
-### Preprocessor Wrappers (Header Guard)
-- Used to prevent multiple-definition (compilation) errors when a header is included more than once.
-- **Problem**: If `A.h` defines `class A{}` and `B.h` includes `A.h`, then a `.cpp` including both `A.h` and `B.h` gets `class A` defined twice → compilation error C2011.
-- **Solution**:
+### 预处理器包装器（头文件保护）
+- 用于防止头文件被多次包含时产生的多重定义（编译）错误。
+- **问题**：如果 `A.h` 定义了 `class A{}`，而 `B.h` 包含了 `A.h`，那么一个同时包含 `A.h` 和 `B.h` 的 `.cpp` 文件将使 `class A` 被定义两次 → 编译错误 C2011。
+- **解决方案**：
 ```cpp
 #ifndef FLAG
 #define FLAG
-// ... class definition ...
+// ... 类定义 ...
 #endif
 ```
 
-### 1st Time Class (Fig. 9.1~9.3)
-- Basic class with `Time()` default constructor, `setTime()`, `printUniversal()`, `printStandard()`
-- Data members: `hour`, `minute`, `second` (private)
-- Member functions can be defined in two ways:
-  1. Inside class definition (inline implicitly)
-  2. Outside class definition (using `ClassName::functionName`), can use `inline` keyword
+### 第一版 Time 类（图 9.1~9.3）
+- 基本类，包含 `Time()` 默认构造函数、`setTime()`、`printUniversal()`、`printStandard()`
+- 数据成员：`hour`、`minute`、`second`（private）
+- 成员函数可以用两种方式定义：
+  1. 在类定义内部（隐式内联）
+  2. 在类定义外部（使用 `ClassName::functionName`），可使用 `inline` 关键字
 
-### Header file structure (Time.h):
+### 头文件结构（Time.h）：
 ```cpp
 #ifndef TIME_H
 #define TIME_H
 class Time {
 public:
-    Time(); // default constructor
+    Time(); // 默认构造函数
     void setTime(int, int, int);
     void printUniversal();
     void printStandard();
@@ -55,95 +55,95 @@ private:
 #endif
 ```
 
-### Using class handles to access members:
-- By object name: `Time sunset;`
-- By reference: `Time &dinnerTime = sunset;`
-- By pointer: `Time *timeptr = &sunset;`
+### 使用类句柄访问成员：
+- 通过对象名：`Time sunset;`
+- 通过引用：`Time &dinnerTime = sunset;`
+- 通过指针：`Time *timeptr = &sunset;`
 
-### Implementation (Time.cpp):
-- `setTime()` validates hour (0-23), minute (0-59), second (0-59), sets to 0 if invalid
-- `printUniversal()` outputs `HH:MM:SS` using `setfill('0')` and `setw(2)`
-- `printStandard()` outputs 12-hour format with AM/PM
+### 实现（Time.cpp）：
+- `setTime()` 验证 hour（0-23）、minute（0-59）、second（0-59），无效则设为 0
+- `printUniversal()` 使用 `setfill('0')` 和 `setw(2)` 输出 `HH:MM:SS`
+- `printStandard()` 输出带 AM/PM 的12小时制格式
 
-### Rules:
-- Member function must be declared in class definition
-- Cannot explicitly initialize non-static data members in class definition (compilation error)
+### 规则：
+- 成员函数必须在类定义中声明
+- 不能在类定义中显式初始化非静态数据成员（编译错误）
 
-## 9.3 Class Scope and Accessing Class Members
+## 9.3 类作用域与访问类成员
 
-### Scope categories (review from §6.10):
-- Function Scope, File Scope, Block Scope (Local Scope), Function-prototype Scope, Class Scope
+### 作用域分类（回顾 §6.10）：
+- 函数作用域、文件作用域、块作用域（局部作用域）、函数原型作用域、类作用域
 
-### Class Scope contains:
-- Data members (variables declared in class definition)
-- Member functions (declared in class definition, including those defined outside)
-- Any member function has unlimited authority to access any data member in class scope
+### 类作用域包含：
+- 数据成员（在类定义中声明的变量）
+- 成员函数（在类定义中声明的，包括在类外定义的）
+- 任何成员函数都有无限权限访问类作用域中的任何数据成员
 
-### Access rules:
-- **Within class scope**: class members can be directly accessed by all member functions
-- **Outside class scope**: public members are accessed via handles:
-  - Object name + dot: `obj.member`
-  - Reference + dot: `ref.member`
-  - Pointer + arrow: `ptr->member`
-- Member functions can be overloaded (only by other member functions of same class)
-- Variables in member functions have block scope (known only to that function)
-- Non-member functions are at file scope
-- **Hiding**: a block-scope variable hides a class-scope variable of same name;
-  use `ClassName::var` to access the hidden class member; use `::var` for global variable
+### 访问规则：
+- **类作用域内**：类成员可以被所有成员函数直接访问
+- **类作用域外**：公有成员通过句柄访问：
+  - 对象名 + 点号：`obj.member`
+  - 引用 + 点号：`ref.member`
+  - 指针 + 箭头：`ptr->member`
+- 成员函数可以被重载（仅能被同一类的其他成员函数重载）
+- 成员函数中的变量具有块作用域（仅该函数可知）
+- 非成员函数处于文件作用域
+- **隐藏**：块作用域变量会隐藏同名的类作用域变量；
+  使用 `ClassName::var` 访问被隐藏的类成员；使用 `::var` 访问全局变量
 
-### Two member selection operators:
-| Operator | Used with | Example |
+### 两种成员选择运算符：
+| 运算符 | 用于 | 示例 |
 |----------|-----------|---------|
-| `.` (dot) | object name or reference | `counter.setX(1);` `counterRef.print();` |
-| `->` (arrow) | pointer to object | `counterPtr->setX(4);` |
+| `.`（点号） | 对象名或引用 | `counter.setX(1);` `counterRef.print();` |
+| `->`（箭头） | 指向对象的指针 | `counterPtr->setX(4);` |
 
-Four ways to access: `counter.setX(1)`, `counterRef.setX(2)`, `(*counterPtr).setX(3)`, `counterPtr->setX(4)`.
+四种访问方式：`counter.setX(1)`、`counterRef.setX(2)`、`(*counterPtr).setX(3)`、`counterPtr->setX(4)`。
 
-## 9.4 Separating Interface from Implementation
-- Interface: class definition in header `.h` file (function prototypes)
-- Implementation: member function definitions in `.cpp` file
-- Client code only needs to know the interface, not the implementation
+## 9.4 接口与实现分离
+- 接口：头文件 `.h` 中的类定义（函数原型）
+- 实现：`.cpp` 文件中的成员函数定义
+- 客户端代码只需要知道接口，不需要了解实现细节
 
-## 9.5 Access Functions and Utility Functions
+## 9.5 访问函数与工具函数
 
-### Access Functions (public)
-- Can read or display data
-- Can test truth/falsity of conditions → **predicate functions**
-- Examples: `isEmpty()`, `isFull()` — used before accessing objects from container classes (Vector, Linked list, Stack, Queue, ...)
-- E.g. `vector<int> v; v.empty(); // returns true if empty`
+### 访问函数（public）
+- 可以读取或显示数据
+- 可以测试条件的真/假 → **判断函数**
+- 示例：`isEmpty()`、`isFull()` — 在访问容器类（Vector、链表、栈、队列……）的对象之前使用
+- 例如 `vector<int> v; v.empty(); // 为空返回 true`
 
-### Utility Functions (Helper functions, private)
-- `private` member functions
-- Support public member functions
-- Not part of public interface, not intended for client use
+### 工具函数（辅助函数，private）
+- `private` 成员函数
+- 支持公有成员函数
+- 不属于公有接口，不供客户端使用
 
-Example: `SalesPerson` class — `totalAnnualSales()` is a private utility function called by public `printAnnualSales()`. The `sales[]` array manipulation is completely encapsulated inside member functions.
+示例：`SalesPerson` 类 — `totalAnnualSales()` 是一个私有工具函数，被公有函数 `printAnnualSales()` 调用。`sales[]` 数组的操作完全封装在成员函数内部。
 
-## 9.6 Constructors with Default Arguments (2nd Time Class, Fig. 9.4~9.6)
+## 9.6 带默认参数的构造函数（第二版 Time 类，图 9.4~9.6）
 
-### Default arguments rules:
-- Must be specified at the **first occurrence** of the function name:
-  - For global functions: in declaration or in header of definition
-  - For class member functions: in declaration (prototype) or in inline function definition header
+### 默认参数规则：
+- 必须在函数名的**第一次出现**处指定：
+  - 对于全局函数：在声明中或定义头部
+  - 对于类成员函数：在声明（原型）中或内联函数定义头部
 
-### Constructor:
-- A special member function to initialize data members of an object
-- Characteristics:
-  - Same name as class
-  - Invoked **implicitly** by compiler
-  - Usually `public`
-  - With or without parameters
-  - **No return type** (not even `void`), no return value
-  - Can have multiple constructors (overloaded)
+### 构造函数：
+- 一种特殊的成员函数，用于初始化对象的数据成员
+- 特征：
+  - 与类同名
+  - 由编译器**隐式**调用
+  - 通常为 `public`
+  - 可以有参数或无参数
+  - **无返回类型**（连 `void` 也没有），无返回值
+  - 可以有多个构造函数（重载）
 
-### Default Constructor:
-- Takes no arguments, OR defaults all its arguments
-- Two ways to provide:
-  1. Compiler implicitly creates one if no constructors defined: `className::className() {}`
-  2. Programmer explicitly defines parameterless constructor
-- **Maximum of one default constructor per class**
+### 默认构造函数：
+- 不接受任何参数，或所有参数都有默认值
+- 两种提供方式：
+  1. 如果没有定义任何构造函数，编译器隐式创建一个：`className::className() {}`
+  2. 程序员显式定义无参构造函数
+- **每个类最多一个默认构造函数**
 
-### Overloaded Constructor:
+### 重载构造函数：
 ```cpp
 class A {
     int x, y;
@@ -154,125 +154,125 @@ public:
 };
 ```
 
-### Constructor with default arguments (better approach):
+### 带默认参数的构造函数（更好的方式）：
 ```cpp
-Time(int = 0, int = 0, int = 0); // replaces the 3 overloaded constructors
-// Time t1;         // all defaulted
-// Time t2(2);       // hour=2, others defaulted
-// Time t3(21, 34);  // hour+minute, second defaulted
-// Time t4(12, 25, 42); // all specified
+Time(int = 0, int = 0, int = 0); // 替代3个重载构造函数
+// Time t1;         // 全部使用默认值
+// Time t2(2);       // hour=2，其余默认
+// Time t3(21, 34);  // hour+minute，second默认
+// Time t4(12, 25, 42); // 全部指定
 ```
 
-### Important notices:
-- Constructor is invoked implicitly when object is **defined**
-- Once an explicit constructor exists, compiler does **NOT** create a default constructor
-- Constructor must be invoked when object is defined → must be unique
+### 重要注意事项：
+- 构造函数在对象**定义**时隐式调用
+- 一旦存在显式构造函数，编译器**不会**创建默认构造函数
+- 定义对象时必须调用构造函数 → 必须是唯一的
 
-### 2nd Time Class additions (Fig. 9.4~9.5):
-- set/get functions: `setHour()`, `setMinute()`, `setSecond()`, `getHour()`, `getMinute()`, `getSecond()`
-- `setTime()` calls the three individual set functions
-- Constructor calls `setTime()` for validation
+### 第二版 Time 类新增内容（图 9.4~9.5）：
+- set/get 函数：`setHour()`、`setMinute()`、`setSecond()`、`getHour()`、`getMinute()`、`getSecond()`
+- `setTime()` 调用三个独立的 set 函数
+- 构造函数调用 `setTime()` 进行验证
 
-## 9.7 Destructors
+## 9.7 析构函数
 
-### Definition:
+### 定义：
 ```cpp
 class A { ... ~A(...) { ... } ... };
-// Or:
+// 或：
 ClassName::~ClassName() { ... }
 ```
-- Name: `~` + ClassName
-- Invoked **implicitly** by compiler
-- Usually `public`
-- **No parameters**
-- **No return type**, no return value
-- **Cannot be overloaded** (one destructor per class)
+- 名称：`~` + 类名
+- 由编译器**隐式**调用
+- 通常为 `public`
+- **无参数**
+- **无返回类型**，无返回值
+- **不能重载**（每个类一个析构函数）
 
-### Purpose:
-- Called implicitly when an object is destroyed (execution leaves the object's scope)
-- Does **NOT** actually release memory — system reclaims memory afterward
-- Performs "**termination housekeeping**" (cleanup work)
-- If programmer doesn't define one, compiler creates a default: `className::~className(){}`
+### 用途：
+- 当对象被销毁时（执行离开对象作用域）隐式调用
+- **并不**实际释放内存 — 系统在此之后回收内存
+- 执行"**终止清理**"工作（善后工作）
+- 如果程序员没有定义，编译器会创建一个默认的：`className::~className(){}`
 
-## 9.8 When Constructors and Destructors Are Called
+## 9.8 构造函数和析构函数的调用时机
 
-### General rule:
-- Destructor calls are in the **reverse order** of corresponding constructor calls
-- Storage class of objects can alter the order
+### 一般规则：
+- 析构函数调用顺序与对应构造函数调用顺序**相反**
+- 对象的存储类别可以改变此顺序
 
-### Memory layout (RAM):
-| Region | Contents |
+### 内存布局（RAM）：
+| 区域 | 内容 |
 |--------|----------|
-| Heap | Allocated by `new` |
-| Stack | Local variables, arguments, return value, return address |
-| Data | Global/static global/static local variables, constants |
-| Code | Code of member/normal functions |
+| 堆 | 由 `new` 分配 |
+| 栈 | 局部变量、参数、返回值、返回地址 |
+| 数据区 | 全局/静态全局/静态局部变量、常量 |
+| 代码区 | 成员/普通函数的代码 |
 
-### Three categories of objects (by storage class):
+### 按存储类别分类的三种对象：
 
-| Type | Constructor called | Destructor called |
+| 类型 | 构造函数调用时机 | 析构函数调用时机 |
 |------|-------------------|-------------------|
-| **Global object** (defined outside any function) | Before `main()` begins execution | When `main` terminates or `exit()` is called; NOT with `abort()` |
-| **Local object** (defined in function/class) | When object is defined | When execution leaves object scope `{...}`; NOT called if `exit()`/`abort()` |
-| **Static local object** | **Only once**, when execution first reaches definition | When `main` terminates or `exit()`; NOT with `abort()` |
+| **全局对象**（在任何函数外定义） | 在 `main()` 开始执行之前 | 当 `main` 终止或调用 `exit()` 时；使用 `abort()` 则**不**调用 |
+| **局部对象**（在函数/类中定义） | 对象定义时 | 当执行离开对象作用域 `{...}` 时；调用 `exit()`/`abort()` 则**不**调用 |
+| **静态局部对象** | **仅一次**，执行首次到达定义处时 | 当 `main` 终止或调用 `exit()` 时；使用 `abort()` 则**不**调用 |
 
-### Additional rules:
-- Global and static objects destroyed in **reverse order of definition**
-- Local object constructors and destructors called **each time** execution enters/leaves scope
+### 附加规则：
+- 全局和静态对象按定义的**相反顺序**销毁
+- 局部对象的构造函数和析构函数**每次**进入/离开作用域时调用
 
-## 9.9 A Subtle Trap — Returning a Reference to a Private Data Member
+## 9.9 一个微妙的陷阱 — 返回私有数据成员的引用
 
-- A reference is an **alias** of a variable; an acceptable **lvalue** (left side of assignment)
-- If a function returns a reference, that reference can be used as a modifiable lvalue
-- **Danger**: A public member function returning a reference to a private data member allows client code to alter private data → **breaks encapsulation** (serious logic error)
+- 引用是变量的**别名**；一个可接受的**左值**（赋值左侧）
+- 如果函数返回一个引用，该引用可以作为可修改的左值使用
+- **危险**：公有成员函数返回私有数据成员的引用，允许客户端代码修改私有数据 → **破坏封装性**（严重逻辑错误）
 
-## 9.10 Default Memberwise Assignment
+## 9.10 默认逐成员赋值
 
-### Assignment operator (`=`)
-- Can assign one object to another object of same class
-- Each data member of right object is copied to the corresponding data member of left object
-- **Copies data members, not member functions**
-- Can cause serious problems when data members contain **pointers** to dynamically allocated memory
+### 赋值运算符（`=`）
+- 可以将一个对象赋值给同一类的另一个对象
+- 右侧对象的每个数据成员被复制到左侧对象对应的数据成员
+- **复制数据成员，不复制成员函数**
+- 当数据成员包含指向动态分配内存的**指针**时，可能导致严重问题
 
-### Copy Constructor:
-- Initializes a **new** object with an **existing** object of the same class
-- Copies each member (memberwise assignment)
-- Two syntax forms:
+### 复制构造函数：
+- 用一个**已有**对象初始化一个**新**对象
+- 复制每个成员（逐成员赋值）
+- 两种语法形式：
 ```cpp
-Date date2(date1);   // form 1
-Date date2 = date1;  // form 2
-Date date2 = date1, date3 = date2;  // chained
+Date date2(date1);   // 形式1
+Date date2 = date1;  // 形式2
+Date date2 = date1, date3 = date2;  // 链式
 ```
 
-### Default Copy Constructor:
-- If not defined, compiler provides one: `ClassName::ClassName(const ClassName&) {}`
-- This does **shallow copy** — problematic with pointer members
+### 默认复制构造函数：
+- 如果未定义，编译器提供一个：`ClassName::ClassName(const ClassName&) {}`
+- 这做的是**浅复制** — 对指针成员有问题
 
-### User-defined Copy Constructor:
+### 用户自定义复制构造函数：
 ```cpp
 ClassName::ClassName(ClassName &objectName) {
-    // data members assignment
+    // 数据成员赋值
 }
 ```
 
-### When copy constructor is invoked:
-1. A new object is initialized by an existing object of the same class
-2. Objects are **passed by value** (as function argument or return value)
+### 复制构造函数被调用的时机：
+1. 一个新对象由同类的已有对象初始化
+2. 对象被**按值传递**（作为函数参数或返回值）
 
-### Important:
-- Copy constructor must receive its argument by **(const) reference**, not by value
-- Passing by value would cause **infinite recursion** (fatal logic error)
+### 重要：
+- 复制构造函数必须通过**（const）引用**接收参数，不能按值传递
+- 按值传递会导致**无限递归**（致命逻辑错误）
 
-## 9.11 Software Reusability
-- Well-designed classes can be reused in multiple programs
+## 9.11 软件可重用性
+- 设计良好的类可以在多个程序中重用
 
 ---
 
-## Summary of Part I:
-1. Preprocessor wrappers (`#ifndef`/`#define`/`#endif`)
-2. Class scope — three ways to access members (handle: `.` / `->`)
-3. Access functions & Utility functions
-4. Constructor with default arguments
-5. Order of constructor & destructor calls
-6. Destructor encapsulation — returning reference to private data member
-7. Default memberwise assignment (assignment operator + copy constructor)
+## 第一部分小结：
+1. 预处理器包装器（`#ifndef`/`#define`/`#endif`）
+2. 类作用域 — 访问成员的三种方式（句柄：`.` / `->`）
+3. 访问函数和工具函数
+4. 带默认参数的构造函数
+5. 构造函数和析构函数的调用顺序
+6. 析构函数与封装 — 返回私有数据成员的引用
+7. 默认逐成员赋值（赋值运算符 + 复制构造函数）
